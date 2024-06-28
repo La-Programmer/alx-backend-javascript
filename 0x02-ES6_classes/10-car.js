@@ -1,4 +1,8 @@
 export default class Car {
+  static get [Symbol.species]() {
+    return this;
+  }
+
   constructor(brand, motor, color) {
     const properties = {
       brand,
@@ -15,7 +19,7 @@ export default class Car {
   }
 
   cloneCar() {
-    const Species = this.constructor;
+    const Species = this.constructor[Symbol.species];
     const result = new Species();
     return result;
   }

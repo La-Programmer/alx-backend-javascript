@@ -5,12 +5,36 @@ const hostname = '127.0.0.1';
 const port = 1245;
 const db = process.argv[2];
 
+const app = createServer((req, res) => {
+  switch (req.url) {
+    case '/':
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      res.end('Hello Holberton School!');
+      break;
+    case '/students':
+      res.writeHead(200, { 'Content-Type': 'text/plain' });
+      res.write('This is the list of our students\n');
+      countStudents(db)
+        .then((data) => res.end(data))
+        .catch((error) => res.end(error.toString()));
+      break;
+    default:
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      res.end('Not Found');
+      break;
+  }
+});
+
+app.listen(port, hostname, () => {
+  console.log(`App is running on port ${port} and host ${hostname}`);
+});
+
 // Handle CSV file
 const getCsvData = (path) => new Promise(
   (resolve, reject) => {
     fs.readFile(path, 'utf-8', (err, data) => {
       if (err) {
-        reject(new Error('Cannot load the database'));
+        reject('Cannot load the database');
       } else {
         resolve(data.trim());
       }
@@ -42,31 +66,6 @@ const constructString = (data) => {
   }
   return result;
 };
-
-// HTTP SERVER
-const app = createServer((req, res) => {
-  switch (req.url) {
-    case '/':
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.end('Hello Holberton School!');
-      break;
-    case '/students':
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      res.write('This is the list of our students\n');
-      countStudents(db)
-        .then((data) => res.end(data))
-        .catch((error) => res.end(error.toString()));
-      break;
-    default:
-      res.writeHead(404, { 'Content-Type': 'text/plain' });
-      res.end('Not Found');
-      break;
-  }
-});
-
-app.listen(port, hostname, () => {
-  console.log(`App is running on port ${port} and host ${hostname}`);
-});
 
 const countStudents = (path) => getCsvData(path)
     .then((data) => constructString(data))

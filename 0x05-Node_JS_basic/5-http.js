@@ -15,16 +15,16 @@ const getCsvData = (path) => new Promise(
         resolve(data.trim());
       }
     });
-  },
+  }
 );
 
 const constructString = (data) => {
   const splitData = data.split('\n');
   const splitData2 = splitData.slice(1);
-  let result = '';
+  let result = "";
   const studentNo = splitData2.length;
   result += `Number of students: ${studentNo}\n`;
-  const fields = {};
+  const fields = {}
   for (const rawEntry of splitData2) {
     const entry = rawEntry.split(',');
     const field = entry[entry.length - 1];
@@ -40,12 +40,8 @@ const constructString = (data) => {
       result += `Number of students in ${key}: ${value.length}. List: ${value.join(', ')}\n`;
     }
   }
-  return result.trim();
+  return result;
 };
-
-const countStudents = (path) => getCsvData(path)
-  .then((data) => constructString(data))
-  .catch((error) => error);
 
 // HTTP SERVER
 const app = createServer((req, res) => {
@@ -71,5 +67,9 @@ const app = createServer((req, res) => {
 app.listen(port, hostname, () => {
   console.log(`App is running on port ${port} and host ${hostname}`);
 });
+
+const countStudents = (path) => getCsvData(path)
+    .then((data) => constructString(data))
+    .catch((error) => error);
 
 module.exports = app;

@@ -10,7 +10,7 @@ const getCsvData = (path) => new Promise(
   (resolve, reject) => {
     fs.readFile(path, 'utf-8', (err, data) => {
       if (err) {
-        reject('Cannot load the database');
+        reject(new Error('Cannot load the database'));
       } else {
         resolve(data.trim());
       }
@@ -24,7 +24,7 @@ const constructString = (data) => {
   let result = '';
   const studentNo = splitData2.length;
   result += `Number of students: ${studentNo}\n`;
-  const fields = {}
+  const fields = {};
   for (const rawEntry of splitData2) {
     const entry = rawEntry.split(',');
     const field = entry[entry.length - 1];

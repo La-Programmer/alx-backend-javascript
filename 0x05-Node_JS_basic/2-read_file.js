@@ -1,33 +1,21 @@
 const fs = require('fs');
-const readLine = require('readline');
 
-const getDataFromCsv = (path) => new Promise((resolve, reject) => {
-  const csvData = [];
-  const readStream = fs.createReadStream(path);
-  const readInterface = readLine.createInterface({
-    input: readStream,
-  });
-  readInterface.on('line', (line) => {
-    const trimmedLine = line.trim();
-    if (trimmedLine !== '') {
-      const row = trimmedLine.split(',');
-      csvData.push(row);
-    }
-  });
-  readInterface.on('close', () => {
-    resolve(csvData);
-  });
-  readInterface.on('error', () => {
-    reject(new Error('Cannot load the database'));
-  });
-});
-
-async function displayCsvData(path) {
+const getDataFromCsv = (path) => {
   try {
-    const csvData = await getDataFromCsv(path);
+    const data = fs.readFileSync(path, 'utf-8');
+    return data.trim();
+  } catch (error) {
+    throw new Error('Cannot load the database');
+  }
+};
+
+function displayCsvData(path) {
+    const csvRawData = getDataFromCsv(path);
+    const csvData = csvRawData.split('\n');
     const userCount = csvData.length - 1;
     const fields = {};
-    for (const entry of csvData.slice(1)) {
+    for (const rawEntry of csvData.slice(1)) {
+      const entry = rawEntry.split(',');
       const field = entry[entry.length - 1];
       if (field in fields) {
         fields[field].push(entry[0]);
@@ -42,9 +30,6 @@ async function displayCsvData(path) {
         console.log(`Number of students in ${key}: ${value.length}. List: ${value.join(', ')}`);
       }
     }
-  } catch (err) {
-    console.log(err.message);
-  }
 }
 
 const countStudents = (path) => {

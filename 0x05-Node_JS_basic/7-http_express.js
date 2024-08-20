@@ -48,7 +48,8 @@ const countStudents = (path) => getCsvData(path)
   .catch((error) => error);
 
 app.get('/', (req, res) => {
-  res.send('Hello Holberton School!');
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('Hello Holberton School!');
 });
 
 app.get('/students', (req, res) => {

@@ -14,15 +14,17 @@ const display = (path) => {
   const students = message.split('\n').slice(1);
   const fields = {};
   for (const entry of students) {
-    const keys = Object.keys(fields);
-    const splitEntry = entry.split(',');
-    const lastIndex = splitEntry.length - 1;
-    const field = splitEntry[lastIndex];
-    const firstName = splitEntry[0];
-    if (keys.includes(field)) {
-      fields[field].push(firstName);
-    } else {
-      fields[field] = [firstName];
+    if (entry.trim() !== '') {
+      const keys = Object.keys(fields);
+      const splitEntry = entry.split(',');
+      const lastIndex = splitEntry.length - 1;
+      const field = splitEntry[lastIndex];
+      const firstName = splitEntry[0];
+      if (keys.includes(field)) {
+        fields[field].push(firstName);
+      } else {
+        fields[field] = [firstName];
+      }
     }
   }
   console.log(`Number of students: ${students.length}`);

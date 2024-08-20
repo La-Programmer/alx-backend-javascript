@@ -58,7 +58,7 @@ const app = createServer((req, res) => {
       res.write('This is the list of our students\n');
       countStudents(db)
         .then((data) => res.end(data))
-        .catch((error) => res.end(error.toString()));
+        .catch((error) => res.end(error));
       break;
     default:
       res.writeHead(404, { 'Content-Type': 'text/plain' });

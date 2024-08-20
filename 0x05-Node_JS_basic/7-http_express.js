@@ -40,7 +40,7 @@ const constructString = (data) => {
       result += `Number of students in ${key}: ${value.length}. List: ${value.join(', ')}\n`;
     }
   }
-  return result.trim();
+  return result;
 };
 
 const countStudents = (path) => getCsvData(path)

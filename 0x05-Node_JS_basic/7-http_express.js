@@ -48,15 +48,13 @@ const countStudents = (path) => getCsvData(path)
   .catch((error) => error);
 
 app.get('/', (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Hello Holberton School!');
+  res.send('Hello Holberton School!');
 });
 
 app.get('/students', (req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
   countStudents(db)
-    .then((data) => res.end(data))
-    .catch((error) => res.end(error));
+    .then((data) => res.send(data))
+    .catch((error) => res.send(error));
 });
 
 app.listen(port, () => {

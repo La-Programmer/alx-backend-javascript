@@ -15,13 +15,13 @@ const getCsvData = (path) => new Promise(
         resolve(data.trim());
       }
     });
-  }
+  },
 );
 
 const constructString = (data) => {
   const splitData = data.split('\n');
   const splitData2 = splitData.slice(1);
-  let result = "";
+  let result = '';
   const studentNo = splitData2.length;
   result += `Number of students: ${studentNo}\n`;
   const fields = {}
@@ -44,8 +44,8 @@ const constructString = (data) => {
 };
 
 const countStudents = (path) => getCsvData(path)
-    .then((data) => constructString(data))
-    .catch((error) => error);
+  .then((data) => constructString(data))
+  .catch((error) => error);
 
 const app = createServer((req, res) => {
   switch (req.url) {

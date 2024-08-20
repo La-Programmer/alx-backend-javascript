@@ -10,7 +10,7 @@ const getCsvData = (path) => new Promise(
   (resolve, reject) => {
     fs.readFile(path, 'utf-8', (err, data) => {
       if (err) {
-        reject(new Error('Cannot load the database'));
+        reject('Cannot load the database');
       } else {
         resolve(data.trim());
       }

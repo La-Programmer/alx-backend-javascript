@@ -37,7 +37,7 @@ const constructString = (data) => {
   for (const key in fields) {
     if (Object.keys(fields).includes(key)) {
       const value = fields[key];
-      result += `Number of students in ${key}: ${value.length}. List: ${value.join(', ')}\n`;
+      result += `Number of students in ${key}: ${value.length}. List: ${value.join(', ')}`;
     }
   }
   return result;

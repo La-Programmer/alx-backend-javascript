@@ -40,7 +40,7 @@ const constructString = (data) => {
       result += `Number of students in ${key}: ${value.length}. List: ${value.join(', ')}\n`;
     }
   }
-  return result;
+  return result.trim();
 };
 
 const countStudents = (path) => getCsvData(path)
@@ -52,9 +52,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/students', (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
   countStudents(db)
-    .then((data) => res.send(data))
-    .catch((error) => res.send(error));
+    .then((data) => res.end(data))
+    .catch((error) => res.end(error));
 });
 
 app.listen(port, () => {

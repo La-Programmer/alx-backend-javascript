@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const getCsvData = (path) => {
   try {
     const data = fs.readFileSync(path, 'utf-8');
-    return data;
+    return data.trim();
   } catch (err) {
     throw new Error('Cannot load the database');
   }
@@ -14,17 +14,15 @@ const display = (path) => {
   const students = message.split('\n').slice(1);
   const fields = {};
   for (const entry of students) {
-    if (entry.trim() !== '') {
-      const keys = Object.keys(fields);
-      const splitEntry = entry.split(',');
-      const lastIndex = splitEntry.length - 1;
-      const field = splitEntry[lastIndex];
-      const firstName = splitEntry[0];
-      if (keys.includes(field)) {
-        fields[field].push(firstName);
-      } else {
-        fields[field] = [firstName];
-      }
+    const keys = Object.keys(fields);
+    const splitEntry = entry.split(',');
+    const lastIndex = splitEntry.length - 1;
+    const field = splitEntry[lastIndex];
+    const firstName = splitEntry[0];
+    if (keys.includes(field)) {
+      fields[field].push(firstName);
+    } else {
+      fields[field] = [firstName];
     }
   }
   console.log(`Number of students: ${students.length}`);

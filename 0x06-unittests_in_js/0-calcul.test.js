@@ -1,20 +1,20 @@
-const assert = require('assert');
-const { describe, it } = require('node:test');
-const calculateNumber = require('./0-calcul');
+const assert = require("assert");
+const calculateNumber = require("./0-calcul.js");
 
-describe('#calculateNumber()', function () {
-  it('should return a whole integer in all cases', function () {
-    assert.equal(calculateNumber(4, 3), 7);
-    assert.equal(calculateNumber(-3, 5), 2);
-    assert.equal(calculateNumber(3.7, 7), 11);
-    assert.equal(calculateNumber(-2.4, 5), 3);
+describe('calculateNumber', () => {
+  it('it round the first argument', () => {
+    assert.equal(calculateNumber(2.9, 0), 3);
   });
-  it('should return 3', function () {
-    assert.equal(calculateNumber(1, 2), 3);
-    assert.equal(calculateNumber(0, 3), 3);
+
+  it('it round the second argument', () => {
+    assert.equal(calculateNumber(0, 0.7), 1);
   });
-  it('should return -4', function () {
-    assert.equal(calculateNumber(4, -8), -4);
-    assert.equal(calculateNumber(-12, 8), -4);
+  it('it should return the right number', () => {
+    assert.equal(calculateNumber(1.3, 0), 1);
+    assert.equal(calculateNumber(0, 1.2), 1);
+    assert.equal(calculateNumber(1.3, 1.3), 2);
+    assert.equal(calculateNumber(1.7, 1.2), 3);
+    assert.equal(calculateNumber(1.3, 1.8), 3);
+    assert.equal(calculateNumber(1.6, 1.8), 4);
   });
 });
